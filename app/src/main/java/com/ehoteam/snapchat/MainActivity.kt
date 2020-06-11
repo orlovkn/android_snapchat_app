@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goClicked(view: View) {
-        Log.i("email", emailEditText?.text.toString())
         // check if we can log in this user
         auth.signInWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
             .addOnCompleteListener(this) { task ->
