@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     var emailEditText: EditText? = null
     var passwordEditText: EditText? = null
     val auth = Firebase.auth
+    val database = Firebase.database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,10 @@ class MainActivity : AppCompatActivity() {
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
                                 // add to database
+                                database.getReference()
+                                    .child("users")
+                                    .child(task.result?.user?.uid.toString())
+                                    .child("email").setValue(emailEditText?.text.toString())
                                 logIn()
                             } else {
                                 Toast.makeText(this, "Login failed :(", Toast.LENGTH_SHORT).show()
@@ -47,9 +54,6 @@ class MainActivity : AppCompatActivity() {
                         }
                 }
             }
-
-
-
 
     }
 
